@@ -42,6 +42,18 @@ public class FractionUtil {
         }
     }
 
+    /**
+     * 将带分数化成假分数
+     * @param realFraction 带分数
+     * @return
+     */
+    public static String toFakeFraction(String realFraction) {
+        String[] nums = realFraction.split("'");
+        Fraction fraction = Fraction.stringToFraction(nums[1]);
+        fraction.setNumerator(fraction.getNumerator() + Integer.parseInt(nums[0]) * fraction.getDenominator());
+        return fraction.toString();
+    }
+
     public static String toRealFormula(String formula) {
         String[] elements = formula.split(" ");
         for (int i = 0; i < elements.length; i++) {

@@ -3,6 +3,7 @@ package main;
 import po.Fraction;
 import service.CalculateService;
 import service.GenerateService;
+import service.JudgeService;
 import util.FileUtil;
 import util.FractionUtil;
 import util.StringUtil;
@@ -42,6 +43,9 @@ public class Main {
                 System.exit(0);
             } else if ("-e".equals(params[0])) {
                 Map<String,String> paramMap = StringUtil.getParamMap2(params);
+                JudgeService judgeService = new JudgeService();
+                boolean isSuccess = judgeService.judge(FileUtil.readFiles(paramMap.get("-e")));
+                System.out.println(isSuccess);
             }  else {
                 System.out.println("参数输入格式错误");
             }

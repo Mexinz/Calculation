@@ -3,6 +3,7 @@ package service;
 import po.Equation;
 import po.Fraction;
 import po.Process;
+import util.FractionUtil;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -92,7 +93,11 @@ public class Calculation implements Callable<Equation> {
             symbol = it.next();
             if("×".equals(symbol) || "÷".equals(symbol)) {
                 a = Fraction.stringToFraction(stack.pop());
-                b = Fraction.stringToFraction(it.next());
+                String param = it.next();
+                if (param.contains("'")) {
+                    param = FractionUtil.toFakeFraction(param);
+                }
+                b = Fraction.stringToFraction(param);
                 switch (symbol) {
                     case "×" :
                         answer = a.multiply(b);
@@ -108,6 +113,9 @@ public class Calculation implements Callable<Equation> {
                     stack.push(answer.toString());
                 }
             } else {
+                if (symbol.contains("'")) {
+                    symbol = FractionUtil.toFakeFraction(symbol);
+                }
                 stack.push(symbol);
             }
         }

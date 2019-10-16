@@ -1,6 +1,7 @@
 package util;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,40 @@ public class FileUtil {
                 writer.newLine();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static List<String> readFiles(String fileUrl) {
+        File file = new File(fileUrl);
+        if (file.exists()) {
+            List<String> formulas = new ArrayList<>();
+            try (InputStream inputStream = new FileInputStream(file);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
+                String str;
+                while((str=reader.readLine()) != null){
+                    formulas.add(str);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return formulas;
+        } else {
+            return null;
+        }
+    }
+
+    public static boolean writeGrades(List<Integer> corrects, List<Integer> wrongs) {
+        File file = new File(Constants.gradeFile);
+        try (OutputStream outputStream = new FileOutputStream(file);
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream))){
+                writer.write("Correct: " + corrects.size() + corrects.toString());
+                writer.newLine();
+                writer.write("Wrong: " + wrongs.size() + wrongs.toString());
+            }
+         catch (IOException e) {
             e.printStackTrace();
             return false;
         }

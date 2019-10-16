@@ -15,4 +15,6 @@ public class Constants {
 
     public static String exerciseFile = "Exercises.txt";
     public static String answerFile = "Answers.txt";
+
+    public static String gradeFile = "Grade.txt";
 }
